@@ -1,0 +1,17 @@
+@media (max-width: 767px) {
+    .navbar-container .navbar .btn {
+        font-size: 12px;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+
+.navbar {
+    background: linear-gradient(to bottom, #26273e, #101565);
+}
+
+
+
+.color-shop {
+    color: rgb(252, 235, 123);
+}

@@ -1,0 +1,13 @@
+.mr8px {
+    margin-right: 8px;
+}
+
+.pagination .page-item.active .page-link {
+    border: none;
+    background-color: rgba(6, 26, 126, 0.941);
+}
+
+.pagination .page-link {
+    border: none;
+    color: #000;
+}
