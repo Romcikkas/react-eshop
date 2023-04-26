@@ -37,6 +37,14 @@ const DeviceItem = (props) => {
           </div>
         </div>
         <div>{props.device.name}</div>
+        <div
+          style={{
+            marginTop: '10px',
+            fontSize: '14px',
+          }}
+        >
+          Price: {props.device.price} Eur
+        </div>
       </Card>
     </Col>
   );

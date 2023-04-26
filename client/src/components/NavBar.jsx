@@ -145,6 +145,15 @@ const NavBar = observer(() => {
             to="/basket"
           >
             <BsCart style={{ marginLeft: '10px' }} />
+            <span
+              style={{
+                marginLeft: '5px',
+                opacity: '0.85',
+                color: 'rgb(217 203 119)',
+              }}
+            >
+              {!!device.basketDevices.length && device.basketDevices.length}
+            </span>
           </NavLink>
         </Container>
       </Navbar>

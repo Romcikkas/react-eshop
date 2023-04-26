@@ -5,16 +5,21 @@ export class DeviceStore {
     this._types = [];
     this._brands = [];
     this._devices = [];
+    this._basketDevices = [];
     this._rating = 0;
     this._selectedType = {};
     this._selectedBrand = {};
     this._page = 1;
     this._totalCount = 0;
-    this._limit = 2;
+    this._limit = 4;
     this._searchInput = '';
     this._filteredDevices = [];
     this._useFilteredDevices = false;
     makeAutoObservable(this);
+  }
+
+  setBasketDevices(basketDevices) {
+    this._basketDevices = basketDevices;
   }
 
   setRating(rating) {
@@ -43,6 +48,10 @@ export class DeviceStore {
 
   setUseFilteredDevices(useFilteredDevices) {
     this._useFilteredDevices = useFilteredDevices;
+  }
+
+  get basketDevices() {
+    return this._basketDevices;
   }
 
   get rating() {

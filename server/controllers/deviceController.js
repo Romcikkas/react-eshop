@@ -7,7 +7,8 @@ const ApiError = require('../error/ApiError');
 class DeviceController {
   async create(req, res, next) {
     try {
-      let { name, price, rating, brandId, typeId, info } = req.body;
+      let { name, price, rating, ratingSum, votes, brandId, typeId, info } =
+        req.body;
       const { img } = req.files;
       let fileName = uuid.v4() + '.jpg';
       img.mv(path.resolve(__dirname, '..', 'static', fileName));
@@ -15,6 +16,8 @@ class DeviceController {
         name,
         price,
         rating,
+        votes,
+        ratingSum,
         brandId,
         typeId,
         img: fileName,
@@ -101,6 +104,21 @@ class DeviceController {
     const { id } = req.params;
     const device = await Device.destroy({ where: { id } });
     return res.json(device);
+  }
+
+  async updateRating(req, res, next) {
+    const { id } = req.params;
+    const { rating, votes, ratingSum } = req.body;
+    try {
+      const device = await Device.findOne({ where: { id } });
+      if (!device) {
+        return next(ApiError.notFound(`Device with id ${id} not found`));
+      }
+      await device.update({ rating, votes, ratingSum });
+      return res.json(device);
+    } catch (e) {
+      return next(ApiError.badRequest(e.message));
+    }
   }
 }
 

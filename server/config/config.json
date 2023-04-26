@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": 55555555,
+    "database": "online_store",
+    "host": "http://localhost:5000/",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "postgres",
+    "password": 55555555,
+    "database": "online_store",
+    "host": "http://localhost:5000/",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "postgres",
+    "password": 55555555,
+    "database": "online_store",
+    "host": "http://localhost:5000/",
+    "dialect": "mysql"
+  }
+}

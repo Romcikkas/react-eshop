@@ -1,31 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
-import iphone from '../assets/iphone.jpg';
 import star from '../assets/star_big.png';
 import { useParams } from 'react-router-dom';
 import { fetchOneDevice } from '../http/deviceApi';
 import Rating from '../components/Rating';
-// import Rating from 'react-rating';
+import { Context } from '../index';
+import { observer } from 'mobx-react';
 
 const DevicePage = () => {
-  const [device, setDevice] = useState({ info: [] });
-
+  const { device } = useContext(Context);
+  const [deviceState, setDeviceState] = useState({ info: [] });
   const { id } = useParams();
 
   useEffect(() => {
-    fetchOneDevice(id).then((data) => setDevice(data));
+    fetchOneDevice(id).then((data) => setDeviceState(data));
   }, []);
+
+  const addToCard = (id) => {
+    device.devices.map((d) => {
+      if (d.id === +id) {
+        device.setBasketDevices([...device.basketDevices, d]);
+      }
+    });
+  };
 
   return (
     <Container className="mt-3">
       <Row>
         <Col md={4} className=" d-flex justify-content-center">
-          <Image width={240} height={240} src={iphone} />
+          <Image
+            width={240}
+            height={240}
+            src={process.env.REACT_APP_API_URL + deviceState.img}
+          />
         </Col>
         <Col md={4}>
           <Row className="d-flex flex-column align-items-center">
             <h2 className="d-flex justify-content-center mt-3 mt-md-0">
-              {device.name}
+              {deviceState.name}
             </h2>
             <div
               className="d-flex align-items-center justify-content-center"
@@ -37,7 +49,7 @@ const DevicePage = () => {
                 backgroundSize: 'cover',
               }}
             >
-              {device.rating}
+              {deviceState.rating > 0 ? deviceState.rating : ''}
             </div>
           </Row>
         </Col>
@@ -52,17 +64,19 @@ const DevicePage = () => {
               border: '2px solid lightgray',
             }}
           >
-            <h3>From: {device.price} Eur</h3>
-            <Button variant="outline-dark">Add to cart</Button>
+            <h3>Price: {deviceState.price} Eur</h3>
+            <Button variant="outline-dark" onClick={() => addToCard(id)}>
+              Add to cart
+            </Button>
           </Card>
         </Col>
       </Row>
-      <Rating />
+      <Rating setDevicePage={setDeviceState} />
       <Row className="d-flex justify-content-center mt-5">
         <Row>
           <h1 className="mb-4 px-1">Specifications:</h1>
         </Row>
-        {device.info.map((d) => (
+        {deviceState.info.map((d) => (
           <Row
             key={d.id}
             style={{
@@ -79,4 +93,4 @@ const DevicePage = () => {
   );
 };
 
-export default DevicePage;
+export default observer(DevicePage);
